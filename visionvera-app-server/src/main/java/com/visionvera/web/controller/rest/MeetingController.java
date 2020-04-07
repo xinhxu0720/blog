@@ -36,17 +36,6 @@ public class MeetingController extends BaseReturn {
     @Resource
     AppServerConfig appServerConfig;
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public Object test(@RequestParam(value = "title") String title,
-                       @RequestParam(value = "content", required = false) String content,
-                       @RequestBody Map<String, String> message) {
-        //            String regEx_script="<script[^>]*?>[\\s\\S]*?<\\/script>"; //定义script的正则表达式
-
-        System.out.println("过滤前：" + message.get("message"));
-        System.out.println(title);
-        System.out.println(123123);
-        return "ok";
-    }
 
     /**
      * @Description TODO 添加文章
