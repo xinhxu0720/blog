@@ -1,0 +1,132 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server",
+      "type": "com.visionvera.config.AppServerConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.apply-count",
+      "description": "虚拟会议室可申请入会次数(默认是3次)",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.lb-ip",
+      "description": "录播服务器ip",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.lb-login-name",
+      "description": "录播服务器登录账户",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.lb-port",
+      "description": "录播服务器端口",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.lb-pwd",
+      "description": "录播服务器登录密码",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.pserver-ip",
+      "description": "掌上通ip",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.pserver-port",
+      "description": "掌上通端口",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.publish-images",
+      "description": "公告图片上传到服务器路径名",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.quit-count",
+      "description": "虚拟会议室可申请退会次数(默认是3次)",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.sbgl-ip",
+      "description": "设备管理ip",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.sbgl-port",
+      "description": "设备管理端口",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.wg-check-time",
+      "description": "网管审批用户缓存时间字段",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.wg-ip",
+      "description": "网管ip",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.wg-login-name",
+      "description": "网管登录账户",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.wg-port",
+      "description": "网管port",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.wg-pwd",
+      "description": "网管登录密码",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.zhdn-ip",
+      "description": "智慧大脑ip",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.zhdn-port",
+      "description": "智慧大脑端口",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.zhdnnt-ip",
+      "description": "智慧大脑脑图ip",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.visionvera.config.AppServerConfig",
+      "name": "server.zhdnnt-port",
+      "description": "智慧大脑脑图端口",
+      "type": "java.lang.String"
+    }
+  ]
+}

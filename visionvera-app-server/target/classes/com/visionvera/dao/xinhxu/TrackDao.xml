@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visionvera.dao.xinhxu.TrackDao">
+
+	<select id="find" resultType="com.visionvera.vo.Track">
+		select id,version,ip from track where ip=#{ip};
+	</select>
+
+	<!--<insert id="add">
+	    insert into track (create_date,vserion,ip,country,region,city,county,isp,country_id,area_id,region_id,city_id,county_id,isp_id) values(sysdate(),1,#{vserion},#{ip},#{country},#{region},#{city,#{county},#{isp},#{country_id},#{area_id},#{region_id},#{city_id},#{county_id},#{isp_id})
+	</insert>-->
+		<insert id="add">
+			insert into track
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="null != createDate">
+					create_date,
+				</if>
+				<if test="null != version">
+					version,
+				</if>
+				<if test="null != ip">
+					ip,
+				</if>
+				<if test="null != country">
+					country,
+				</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+				<if test="null != createDate">
+					#{createDate},
+				</if>
+				<if test="null != version">
+					#{version},
+				</if>
+				<if test="null != ip">
+					#{ip},
+				</if>
+				<if test="null != country">
+					#{country}
+				</if>
+			</trim>
+		</insert>
+
+	<update id="update">
+		update track
+		<trim prefix="set" suffixOverrides=",">
+			<if test="track.version!=null">
+				version=#{track.version},
+			</if>
+			modify_date=#{track.modifyDate},
+			<if test="track.country != null and !track.country.equals('')">
+			country=#{track.country}
+			</if>
+		</trim>
+		where id=#{track.id}
+	</update>
+	
+	<select id="getUserEmailAndIp" resultType="com.visionvera.vo.Track">
+	  SELECT * FROM track
+	  <if test="email != null">
+		  where
+		  country=#{email}
+	  </if>
+	</select>
+</mapper>

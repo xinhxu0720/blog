@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visionvera.dao.xinhxu.UserDao">
+	
+
+	 
+	 <!--添加地址  -->
+	<!-- <insert id="adduser">
+	  insert into t_user values(#{id},#{name},#{password})
+	 </insert>-->
+
+	<select id="querAll" resultType="com.visionvera.vo.User">
+		select * from  user
+	</select>
+
+	<!-- 通过数据库表的唯一键获取用户数据, 用于登录操作 Start -->
+	<select id="selectUserByUniqueKey" resultType="com.visionvera.bean.cms.UserVO" parameterType="map">
+		SELECT
+		DISTINCT(user.uuid) AS `uuid`,
+		user.`name` AS `name`,
+		user.login_name AS loginName,
+		user.login_pwd AS loginPwd,
+		user.phone AS phone,
+		user.area AS areaId,
+		(CASE WHEN (r.`gradeid` IS NULL) THEN 0 ELSE r.`gradeid` END) AS gradeId,
+		user.area_name AS areaName,
+		DATE_FORMAT(user.create_time,'%Y-%m-%d %H:%i:%s') AS createTime,
+		user.ext1 AS ext1,
+		fail_num AS failNum,
+		pwd_modify_time AS pwdModifyTime,
+		limit_login_time AS limitLoginTime
+		FROM
+		t_user AS `user`
+		LEFT JOIN t_regionb r
+		ON user.`area` = r.`id`
+		<where>
+			<if test="uuid != null and uuid.length() > 0">
+				AND user.uuid = #{uuid}
+			</if>
+			<if test="loginName != null and loginName.length() > 0">
+				AND user.login_name = #{loginName}
+			</if>
+			<if test="phone != null and phone.length() > 0">
+				AND user.phone = #{phone}
+			</if>
+		</where>
+		LIMIT 1
+	</select>
+	<!-- 通过数据库表的唯一键获取用户数据, 用于登录操作 End -->
+
+	<!-- 更新用户基本信息 Start -->
+	<update id="updateUser" parameterType="com.visionvera.bean.cms.UserVO">
+		UPDATE t_user
+		<set>
+			<if test="name != null and name.length() > 0">
+				name = #{name},
+			</if>
+			<if test="loginPwd != null and loginPwd != '' ">
+				login_pwd = #{loginPwd},
+			</if>
+			<if test="orgName != null and orgName != '' ">
+				org_name = #{orgName},
+			</if>
+			<if test="areaId != null and areaId.length() > 0">
+				area = #{areaId},
+			</if>
+			<if test="areaName != null and areaName.length() > 0">
+				area_name = #{areaName},
+			</if>
+			<!-- <if test="updateTime != null and updateTime.length() > 0">
+				update_time = #{updateTime},
+			</if> -->
+			<if test="source != null and source !='' ">
+				source = #{source},
+			</if>
+			<if test="maxDevNum != null and maxDevNum !='' ">
+				max_dev_num = #{maxDevNum},
+			</if>
+			<if test="ext1 != null and ext1.length() > 0">
+				ext1 = #{ext1},
+			</if>
+			<if test="failNum != null">
+				fail_num = #{failNum},
+			</if>
+			<if test="pwdModifyTime != null">
+				pwd_modify_time = #{pwdModifyTime},
+			</if>
+			<if test="limitLoginTime != null ">
+				limit_login_time = #{limitLoginTime},
+			</if>
+			<if test="md5Pwd != null and md5Pwd != '' ">
+				md5_pwd = #{md5Pwd},
+			</if>
+			update_time = NOW()
+		</set>
+		WHERE
+		`uuid` = #{uuid}
+	</update>
+	<!-- 更新用户基本信息 End -->
+</mapper>

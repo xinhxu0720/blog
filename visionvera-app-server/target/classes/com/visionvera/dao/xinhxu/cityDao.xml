@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.visionvera.dao.xinhxu.cityDao" >
+
+
+  <insert id="insertSelective" parameterType="com.visionvera.vo.LeavWord" >
+    insert into leave_word
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getRegionList" resultType="com.visionvera.vo.cityVO" parameterType="com.visionvera.vo.cityVO">
+    SELECT * FROM city
+    WHERE countryZh = #{countryEn}
+    <if test="null != provinceZh">
+      AND provinceZh like CONCAT('%', #{provinceZh}, '%')
+    </if>
+    <if test="null != cityZh">
+      AND  cityZh  like CONCAT('%', #{cityZh}, '%')
+    </if>
+    <if test="null != leaderZh">
+      or  leaderZh  like CONCAT('%', #{leaderZh}, '%')
+    </if>
+  </select>
+</mapper>

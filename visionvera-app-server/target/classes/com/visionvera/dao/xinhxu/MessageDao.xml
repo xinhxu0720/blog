@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.visionvera.dao.xinhxu.MessageDao">
+  <resultMap id="BaseResultMap" type="com.visionvera.vo.Message">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="titly" jdbcType="VARCHAR" property="titly" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+  </resultMap>
+  <insert id="insert" parameterType="com.visionvera.vo.Message">
+    insert into message (id, create_date, modify_date, 
+      version, titly, content, 
+      img)
+    values (#{id,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=INTEGER}, #{titly,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.visionvera.vo.Message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="titly != null">
+        titly,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="soup != null">
+        soup,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="titly != null">
+        #{titly,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="soup != null">
+        #{soup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="querAll" resultType="com.visionvera.vo.Message" useCache="true">
+    SELECT * FROM message
+  </select>
+
+  <select id="findone" resultType="com.visionvera.vo.Message">
+    SELECT * FROM message where create_date >= #{createDate}
+  </select>
+<!--  <resultMap id="BaseResultMap" type="com.xuxinhui.entity.Message">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="version" jdbcType="BIGINT" property="version" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="is_draft" jdbcType="BIT" property="isDraft" />
+    <result column="receiver_delete" jdbcType="BIT" property="receiverDelete" />
+    <result column="receiver_read" jdbcType="BIT" property="receiverRead" />
+    <result column="sender_delete" jdbcType="BIT" property="senderDelete" />
+    <result column="sender_read" jdbcType="BIT" property="senderRead" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="for_message_id" jdbcType="BIGINT" property="forMessageId" />
+    <result column="receiver_id" jdbcType="BIGINT" property="receiverId" />
+    <result column="sender_id" jdbcType="BIGINT" property="senderId" />
+    <result column="messageimgurl" jdbcType="VARCHAR" property="messageimgurl" />
+    <result column="messagefrom" jdbcType="VARCHAR" property="messagefrom" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xuxinhui.entity.Message">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <insert id="insert" parameterType="com.xuxinhui.entity.Message">
+    insert into message (id, create_date, modify_date, 
+      version, ip, is_draft, receiver_delete, 
+      receiver_read, sender_delete, sender_read, 
+      title, for_message_id, receiver_id, 
+      sender_id, messageimgurl, messagefrom, 
+      goods_id, member_id, content
+      )
+    values (#{id,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{version,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{isDraft,jdbcType=BIT}, #{receiverDelete,jdbcType=BIT}, 
+      #{receiverRead,jdbcType=BIT}, #{senderDelete,jdbcType=BIT}, #{senderRead,jdbcType=BIT}, 
+      #{title,jdbcType=VARCHAR}, #{forMessageId,jdbcType=BIGINT}, #{receiverId,jdbcType=BIGINT}, 
+      #{senderId,jdbcType=BIGINT}, #{messageimgurl,jdbcType=VARCHAR}, #{messagefrom,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuxinhui.entity.Message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="modifyDate != null">
+        modify_date,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="isDraft != null">
+        is_draft,
+      </if>
+      <if test="receiverDelete != null">
+        receiver_delete,
+      </if>
+      <if test="receiverRead != null">
+        receiver_read,
+      </if>
+      <if test="senderDelete != null">
+        sender_delete,
+      </if>
+      <if test="senderRead != null">
+        sender_read,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="forMessageId != null">
+        for_message_id,
+      </if>
+      <if test="receiverId != null">
+        receiver_id,
+      </if>
+      <if test="senderId != null">
+        sender_id,
+      </if>
+      <if test="messageimgurl != null">
+        messageimgurl,
+      </if>
+      <if test="messagefrom != null">
+        messagefrom,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="isDraft != null">
+        #{isDraft,jdbcType=BIT},
+      </if>
+      <if test="receiverDelete != null">
+        #{receiverDelete,jdbcType=BIT},
+      </if>
+      <if test="receiverRead != null">
+        #{receiverRead,jdbcType=BIT},
+      </if>
+      <if test="senderDelete != null">
+        #{senderDelete,jdbcType=BIT},
+      </if>
+      <if test="senderRead != null">
+        #{senderRead,jdbcType=BIT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="forMessageId != null">
+        #{forMessageId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverId != null">
+        #{receiverId,jdbcType=BIGINT},
+      </if>
+      <if test="senderId != null">
+        #{senderId,jdbcType=BIGINT},
+      </if>
+      <if test="messageimgurl != null">
+        #{messageimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="messagefrom != null">
+        #{messagefrom,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>-->
+</mapper>

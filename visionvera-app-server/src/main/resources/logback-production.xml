@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml><!-- 解决No grammar constraints (DTD or XML Schema) referenced 
+	in the document 的问题 -->
+<configuration>
+	<!-- 日志基础路径 -->
+	<Property name="BASEPATH" value="./logs" />
+	<!-- 日志保存天数 -->
+	<Property name="LOG_SAVED_DATE" value="10d"/>
+	<!-- 配置日志文件名 -->
+	<Property name="LOG_FILENAME" value="app-servert_all"/>
+	<Property name="LOG_FILENAME_ERROR" value="app-server_error"/>
+	<!-- 日志输出格式 -->
+	<Property name="LOG_PATTERN_LAYOUT" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [ %-5level ] [ %thread ] %class{36} - %M %L - %msg%xEx%n"/>
+
+	<!-- 每天产生一个文件 -->
+	<appender name="RollingFile_all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${BASEPATH}/${LOG_FILENAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 文件名称 -->
+			<fileNamePattern>${BASEPATH}/${LOG_FILENAME}_%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 日志文件保留天数 -->
+			<MaxHistory>${LOG_SAVED_DATE}</MaxHistory>
+		</rollingPolicy>
+
+		<!-- 日志格式 -->
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${LOG_PATTERN_LAYOUT}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 每天产生一个文件 -->
+	<appender name="RollingFile_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${BASEPATH}/${LOG_FILENAME_ERROR}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 文件名称 -->
+			<fileNamePattern>${BASEPATH}/${LOG_FILENAME_ERROR}_%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- 日志文件保留天数 -->
+			<MaxHistory>${LOG_SAVED_DATE}</MaxHistory>
+		</rollingPolicy>
+		
+		<!-- 只打印错误日志 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>error</level>   
+			<onMatch>ACCEPT</onMatch>   
+			<onMismatch>DENY</onMismatch>  
+		</filter>
+
+		<!-- 日志格式 -->
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${LOG_PATTERN_LAYOUT}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 第三方日志系统 -->
+	<logger name="org.springframework" level="info" additivity="false"></logger>
+	<logger name="org.springframework.context" level="info" additivity="false"></logger>
+	<logger name="org.mybatis.spring" level="info" additivity="false"></logger>
+	<logger name="org.apache.ibatis.io" level="info" additivity="false"></logger>
+	<logger name="org.apache.ibatis.logging" level="info" additivity="false"></logger>
+	<logger name="java.sql.Connection" level="debug" additivity="false"></logger>
+	<logger name="java.sql.Statement" level="debug" additivity="false"></logger>
+	<logger name="java.sql.PreparedStatement" level="debug" additivity="false"></logger>
+
+	<root level="info">
+		<appender-ref ref="RollingFile_all" />
+		<appender-ref ref="RollingFile_error" />
+	</root>
+</configuration>

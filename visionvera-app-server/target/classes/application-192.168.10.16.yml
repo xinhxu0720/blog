@@ -1,0 +1,128 @@
+#生产环境的配置文件
+#数据中心数据源
+datacore:
+  datasource:
+    url: jdbc:mysql://192.168.10.16:3399/v2vdatacore?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+
+#会管数据源
+
+cmsdb:
+  datasource:
+    url: jdbc:mysql://192.168.108.126:3306/cmsdb_64?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+
+#业务中心数据源
+ywcore:
+  datasource:
+    url: jdbc:mysql://192.168.10.16:3399/v2vywcore?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+
+#日志配置
+logging:
+  level:
+    com.visionvera.dao : debug
+    com.visionvera.dao.cms : debug
+#logging:
+#  config: classpath:logback-production.xml
+
+eureka:
+  instance:
+    #Eureka Client向Eureka Server使用真实的IP地址，而不是计算机名
+    prefer-ip-address: true
+    #Eureka Client向Eureka Server使用真实IP后，显示真实的IP地址和端口号
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://192.168.10.16:8761/eureka    #从Eureka服务端获取注册信息的时间间隔
+    registry-fetch-interval-seconds: 5
+    #初始化实例信息到Eureka服务端的时间间隔
+    initial-instance-info-replication-interval-seconds: 10
+
+#连接池的配置信息
+datasource:
+  druid:
+    #配置初始化大小、最小、最大
+    initial-size: 1
+    min-idle: 1
+    max-active: 20
+    #配置获取连接等待超时的时间
+    max-wait: 60000
+    #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    time-between-eviction-runs-millis: 60000
+    #配置一个连接在池中最小生存的时间，单位是毫秒
+    min-evictable-idle-time-millis: 300000
+    validation-query: SELECT 'x'
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    #打开PSCache，并且指定每个连接上PSCache的大小
+    pool-prepared-statements: true
+    max-pool-prepared-statement-per-connection-size: 20
+    #配置监控统计拦截的filters
+    filters: stat
+
+#Redis配置信息
+jedis:
+  #连接池的配置
+  pool:
+    config:
+      #最大连接数
+      max-total: 100000
+      #最大空闲连接数
+      max-idle: 100
+      #最大等待时间，如果超过等待时间，则抛出：JedisConnectionException
+      max-wait-millis: 100
+      #每次释放连接的最大数目
+      num-tests-per-eviction-run: 1024
+      #释放连接的扫描间隔（毫秒）
+      time-between-eviction-runs-millis: 30000
+      #连接最小空闲时间
+      min-evictable-idle-time-millis: 1800000
+      #连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放
+      soft-min-evictable-idle-time-millis: 10000
+      #在获取连接的时候检查有效性, 默认false
+      test-on-borrow: true
+      #在空闲时检查有效性, 默认false
+      test-while-idle: true
+      #连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true
+      block-when-exhausted: false
+  #Redis的单机配置信息
+  single:
+    host: 192.168.10.16
+    port: 6379
+  #Redis的集群配置信息
+  cluster:
+    host01: 10.0.0.1
+    port01: 6379
+    host02: 10.0.0.2
+    port02: 6379
+
+  #会管的ip和端口
+hg:
+  protocol: https
+  ip: 192.168.108.126
+  port: 8080
+  #唐古拉的ip和端口
+tgl_rest:
+  ip: 192.168.108.52
+  port: 11200
+  #唐古拉WebSocket的Ip和端口
+tgl_ws:
+  ip: 192.168.108.52
+  port: 1542
+  #网管的ip和端口
+wg:
+  ip: 10.1.24.108
+  port: 8080
+  #七鱼系统配置
+qiyu:
+  appKey: 5370a3abf8262a4e44eb09f95a204d2f
+  secret: 4F1B977DAAFE4DC69D898439AB1541CD
+

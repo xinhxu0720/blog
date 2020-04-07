@@ -1,0 +1,28 @@
+server:
+  port: 8806
+
+spring:
+  application:
+    #项目的服务名称
+    name: visionvera-app-server
+  #开发环境配置文件
+  profiles:
+    active:
+      #192.168.112.83
+      #127.0.0.1
+      #10.1.7.102
+      182.92.169.183
+  http:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 30MB
+
+info:
+  build:
+    artifact: "@project.artifactId@"
+    name: "@project.build.finalName@"
+    description: "@project.description@-统一接口服务"
+    version: "@project.version@"
+    jdk-version: "@java.version@"
+    businessSide: "调度服务组"
+    maintain: "徐鑫辉:褚英奇"
