@@ -1,5 +1,6 @@
 package com.visionvera.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import scala.Int;
 
 import java.util.Date;
@@ -13,7 +14,9 @@ import java.util.Date;
 public class ArticleVO {
 
     private Integer id;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
     private Integer version;
     private String author;
