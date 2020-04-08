@@ -73,4 +73,10 @@ public class ArticleServiceImpl implements ArticleService{
         return dataReturn.returnSuccess("删除成功");
     }
 
+    @Override
+    public ReturnData getInquireArticle(ArticleVO articleVO) {
+        BaseReturn dataReturn = new BaseReturn();
+        return dataReturn.returnResult(0,"查询成功",null,articleDao.getArticleList(articleVO));
+    }
+
 }

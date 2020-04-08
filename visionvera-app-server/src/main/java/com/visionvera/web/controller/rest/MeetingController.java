@@ -103,10 +103,12 @@ public class MeetingController extends BaseReturn {
 
     @RequestMapping(value = "/getArticleListData", method = RequestMethod.GET)
     public Map<String,Object> getArticleListData(@RequestParam(value = "limit",defaultValue = "5",required = false) Integer pageSize,
-                                                 @RequestParam(value = "page",defaultValue = "1",required = false) Integer pageNum) {
+                                                 @RequestParam(value = "page",defaultValue = "1",required = false) Integer pageNum,
+                                                 @RequestParam(value = "access_token",required = false) String access_token) {
         Map<String, Object> hashMap = new HashMap<>();
         hashMap.put("code",0);
         hashMap.put("mgs","");
+        System.out.println(access_token);
         try {
             ArticleVO articleVO = new ArticleVO();
             ReturnData articleList = articleService.getArticleListData(articleVO,pageSize,pageNum);
@@ -133,4 +135,19 @@ public class MeetingController extends BaseReturn {
     public ReturnData deleteArticle(@RequestBody ArticleVO articleVO) {
         return articleService.deleteArticle(articleVO);
     }
+
+    /**
+     * @Description TODO 模糊查询文章
+     * @param title
+     * @return: com.visionvera.bean.base.ReturnData
+     * @Author: Xinhxu
+     * @Date: 15:31 2020/4/6
+     */
+    @RequestMapping(value = "/getInquireArticle", method = RequestMethod.GET)
+    public ReturnData getInquireArticle(@RequestParam(value = "title") String title) {
+        ArticleVO articleVO = new ArticleVO();
+        articleVO.setTitle(title);
+        return articleService.getInquireArticle(articleVO);
+    }
+
 }

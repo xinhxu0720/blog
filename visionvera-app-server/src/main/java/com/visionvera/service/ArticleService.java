@@ -45,4 +45,6 @@ public interface ArticleService {
     ReturnData getArticleListData(ArticleVO articleVO,Integer pageSize,Integer pageNum);
 
     ReturnData deleteArticle(ArticleVO articleVO);
+
+    ReturnData getInquireArticle(ArticleVO articleVO);
 }

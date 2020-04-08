@@ -81,6 +81,9 @@
     <if test="id != null">
         WHERE id = #{id}
     </if>
+    <if test="null != title and !title.equals('')">
+        WHERE title LIKE CONCAT('%',#{title},'%')
+    </if>
   </select>
 
     <update id="updateArticle" parameterType="com.visionvera.vo.ArticleVO">
