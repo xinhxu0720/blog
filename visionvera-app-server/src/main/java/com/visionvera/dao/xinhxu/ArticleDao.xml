@@ -73,8 +73,8 @@
 
     <select id="getArticleList" resultType="com.visionvera.vo.ArticleVO" parameterType="com.visionvera.vo.ArticleVO">
     SELECT *,
-    create_time AS createTime,
-    update_time AS updateTime,
+    date_format(`create_time`,'%Y-%m-%d %H:%i:%s') AS `createTime`,
+    date_format(`update_time`,'%Y-%m-%d %H:%i:%s') AS `updateTime`,
     cover_image AS coverImage,
     reply_number AS replyNumber
     FROM article
@@ -89,9 +89,14 @@
             <if test="version!=null">
                 version=#{version},
             </if>
-            content=#{content},
+            <if test="content != null and !content.equals('')">
+                content=#{content},
+            </if>
             <if test="title != null and !title.equals('')">
-                title=#{title}
+                title=#{title},
+            </if>
+            <if test="clicks != null and !clicks.equals('')">
+                clicks=#{clicks},
             </if>
         </trim>
         where id=#{id}

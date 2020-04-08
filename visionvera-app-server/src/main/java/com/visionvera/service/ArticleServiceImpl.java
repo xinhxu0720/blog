@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +36,14 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public ReturnData getArticleList(ArticleVO articleVO,Integer pageSize,Integer pageNum) {
         BaseReturn dataReturn = new BaseReturn();
-        return dataReturn.returnResult(0,"获取列表成功",null,articleDao.getArticleList(articleVO));
+        List<ArticleVO> articleList = null;
+        if (null != articleVO.getId()){
+            articleList = articleDao.getArticleList(articleVO);
+            articleVO.setClicks(articleList.get(0).getClicks()+1);
+            articleDao.updateArticle(articleVO);
+        }
+        articleList = articleDao.getArticleList(articleVO);
+        return dataReturn.returnResult(0,"获取列表成功",null,articleList);
     }
 
     @Override
