@@ -23,6 +23,6 @@ info:
     name: "visionvera-app-server-2.1.0-SNAPSHOT"
     description: "移动端接口服务-统一接口服务"
     version: "2.1.0-SNAPSHOT"
-    jdk-version: "1.8.0_111"
+    jdk-version: "1.8.0_201"
     businessSide: "调度服务组"
     maintain: "徐鑫辉:褚英奇"
