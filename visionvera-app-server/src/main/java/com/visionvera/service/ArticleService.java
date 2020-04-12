@@ -42,6 +42,13 @@ public interface ArticleService {
 
     void updateArticle(ArticleVO articleVO);
 
+    /**
+     * 获取文章分页
+     * @param articleVO
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
     ReturnData getArticleListData(ArticleVO articleVO,Integer pageSize,Integer pageNum);
 
     ReturnData deleteArticle(ArticleVO articleVO);

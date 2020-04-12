@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.visionvera.bean.base.BaseReturn;
 import com.visionvera.bean.base.ReturnData;
 import com.visionvera.dao.xinhxu.ArticleDao;
+import com.visionvera.dao.xinhxu.LabelDao;
 import com.visionvera.vo.ArticleVO;
+import com.visionvera.vo.LabelVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class ArticleServiceImpl implements ArticleService{
     @Resource
     ArticleDao articleDao;
 
+    @Resource
+    LabelDao labelDao;
+
     @Override
     public int addArticle(ArticleVO articleVO) {
         articleVO.setCreateTime(new Date());
@@ -43,6 +48,8 @@ public class ArticleServiceImpl implements ArticleService{
             articleDao.updateArticle(articleVO);
         }
         articleList = articleDao.getArticleList(articleVO);
+        //给文章添加标签
+        addLabelName(articleList);
         return dataReturn.returnResult(0,"获取列表成功",null,articleList);
     }
 
@@ -62,7 +69,8 @@ public class ArticleServiceImpl implements ArticleService{
             PageHelper.startPage(hashMap);
         }
         PageInfo<ArticleVO> headlinesInfo = new PageInfo<>(articleDao.getArticleList(articleVO));
-
+        //给文章添加标签
+        addLabelName(headlinesInfo.getList());
         return dataReturn.returnResult(0,"获取列表成功",null,headlinesInfo.getList(),headlinesInfo.getTotal());
     }
 
@@ -79,4 +87,25 @@ public class ArticleServiceImpl implements ArticleService{
         return dataReturn.returnResult(0,"查询成功",null,articleDao.getArticleList(articleVO));
     }
 
+    /**
+     * 给文章添加标签
+     * @param articleList
+     */
+    public void addLabelName(List<ArticleVO> articleList){
+        Map<String, Object> hashMap = new HashMap<>();
+        for (LabelVO label : labelDao.getLabelList(new LabelVO())) {
+            hashMap.put(String.valueOf(label.getId()),label.getName());
+        }
+        for (ArticleVO article : articleList) {
+            String[] args =  article.getArticleType().split(",");
+            for (String arg : args) {
+                if (null == article.getArticleName()){
+                    //当前是第一次添加
+                    article.setArticleName((String) hashMap.get(arg));
+                }else {
+                    article.setArticleName(article.getArticleName()+","+hashMap.get(arg));
+                }
+            }
+        }
+    }
 }

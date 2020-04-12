@@ -36,6 +36,9 @@
             <if test="replyNumber != null">
                 reply_number,
             </if>
+            <if test="articleType != null">
+                article_type,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -68,6 +71,9 @@
             <if test="replyNumber != null">
                 #{replyNumber,jdbcType=INTEGER},
             </if>
+            <if test="articleType != null">
+                #{articleType,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
 
@@ -76,7 +82,8 @@
     date_format(`create_time`,'%Y-%m-%d %H:%i:%s') AS `createTime`,
     date_format(`update_time`,'%Y-%m-%d %H:%i:%s') AS `updateTime`,
     cover_image AS coverImage,
-    reply_number AS replyNumber
+    reply_number AS replyNumber,
+    article_type AS articleType
     FROM article
     <if test="id != null">
         WHERE id = #{id}
@@ -100,6 +107,9 @@
             </if>
             <if test="clicks != null and !clicks.equals('')">
                 clicks=#{clicks},
+            </if>
+            <if test="articleType != null and !articleType.equals('')">
+                article_type=#{articleType},
             </if>
         </trim>
         where id=#{id}

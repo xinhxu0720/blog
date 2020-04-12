@@ -25,7 +25,7 @@ public interface LabelDao {
      * @Date: 14:03 2020/4/2
      */
 
-    List<Label> getLabelList(LabelVO labelVO);
+    List<LabelVO> getLabelList(LabelVO labelVO);
 
     /**
      * @Description TODO 修改文章

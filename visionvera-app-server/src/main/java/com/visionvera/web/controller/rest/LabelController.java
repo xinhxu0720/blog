@@ -17,9 +17,19 @@ public class LabelController extends BaseReturn {
     LabelService labelService;
 
 
+    /**
+     * 获取标签
+     * @param labelId
+     * @return
+     */
     @RequestMapping(value = "/getLabelList", method = RequestMethod.GET)
-    public ReturnData getLabelList(){
-        return labelService.getLabelList(new LabelVO());
+    public ReturnData getLabelList(@RequestParam(value = "labelId",required = false)Integer labelId){
+        LabelVO labelVO = new LabelVO();
+        System.out.println(labelId);
+        if (labelId != null){
+            labelVO.setId(labelId);
+        }
+        return labelService.getLabelList(labelVO);
     }
 
     @RequestMapping(value = "/addLabel", method = RequestMethod.POST)

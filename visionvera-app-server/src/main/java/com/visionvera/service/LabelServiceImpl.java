@@ -25,7 +25,14 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public ReturnData getLabelList(LabelVO labelVO) {
-        return new BaseReturn().returnResult(0, "获取成功", null, labelDao.getLabelList(labelVO));
+        List<LabelVO> labelList = labelDao.getLabelList(labelVO);
+        if ( null != labelVO.getId()){
+            if (!labelList.isEmpty()){
+                labelVO.setClickNumber(labelList.get(0).getClickNumber()+1);
+                labelDao.updateLabel(labelVO);
+            }
+        }
+        return new BaseReturn().returnResult(0, "获取成功", null, labelList);
     }
 
     @Override

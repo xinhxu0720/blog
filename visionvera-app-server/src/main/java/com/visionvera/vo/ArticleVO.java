@@ -25,6 +25,24 @@ public class ArticleVO {
     private String title;
     private Integer clicks;
     private Integer replyNumber;
+    private String articleType;
+    private String articleName;
+
+    public String getArticleName() {
+        return articleName;
+    }
+
+    public void setArticleName(String articleName) {
+        this.articleName = articleName;
+    }
+
+    public String getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(String articleType) {
+        this.articleType = articleType;
+    }
 
     public Integer getId() {
         return id;

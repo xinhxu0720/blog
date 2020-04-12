@@ -30,10 +30,14 @@
     </insert>
 
     <select id="getLabelList" resultType="com.visionvera.vo.LabelVO" parameterType="com.visionvera.vo.LabelVO">
-    SELECT *,
-    date_format(`create_time`,'%Y-%m-%d %H:%i:%s') AS `createTime`
-    FROM label
-  </select>
+        SELECT *,
+        date_format(`create_time`,'%Y-%m-%d %H:%i:%s') AS `createTime`,
+        click_number AS clickNumber
+        FROM label
+        <if test="id != null">
+            WHERE id =#{id}
+        </if>
+    </select>
 
     <update id="updateLabel" parameterType="com.visionvera.vo.LabelVO">
         update label
