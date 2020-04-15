@@ -58,7 +58,7 @@ public class FileUploadUtil {
 						//获取文件路径
 						resultMap.put("filePath", localFile.getPath());
 						//文件名
-						resultMap.put("fileName",fileName);
+						resultMap.put("fileName",myFileName);
 					}
 				}
 			}

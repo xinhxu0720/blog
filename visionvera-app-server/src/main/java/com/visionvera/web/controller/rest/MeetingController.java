@@ -74,6 +74,15 @@ public class MeetingController extends BaseReturn {
         return articleService.getArticleList(articleVO,pageSize,pageNum);
     }
 
+    /**
+     * @Description TODO 上传图片
+     * @param request
+     * @param remark
+     * @return: java.util.Map<java.lang.String,java.lang.Object>
+     * @Author: Xinhxu
+     * @Date: 15:03 2020/4/15
+    */
+
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST, consumes = "multipart/form-data")
     public Map<String,Object> uploadFile(HttpServletRequest request,
                                  @RequestParam(value = "remark",required = false) String remark){
@@ -81,7 +90,7 @@ public class MeetingController extends BaseReturn {
             LOGGER.info("开始上传图片...");
             Map<String, Object> map = new HashMap<>();
             Map<String, Object> uploadFile = FileUploadUtil.uploadFile(request, null, appServerConfig.getPublishImages());
-
+            //图片上传文件完成 数据库插入数据
             map.put("code",0);
             map.put("msg","上传成功");
             return map;
