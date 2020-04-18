@@ -24,6 +24,31 @@
 				<if test="null != country">
 					country,
 				</if>
+				<if test="null != county">
+					county,
+				</if>
+
+				<if test="null != countryName">
+					countryName,
+				</if>
+				<if test="null != countryCode">
+					countryCode,
+				</if>
+				<if test="null != provinceName">
+					provinceName,
+				</if>
+				<if test="null != cityName">
+					cityName,
+				</if>
+				<if test="null != postalCode">
+					postalCode,
+				</if>
+				<if test="null != longitude">
+					longitude,
+				</if>
+				<if test="null != latitude">
+					latitude,
+				</if>
 			</trim>
 			<trim prefix="values (" suffix=")" suffixOverrides=",">
 				<if test="null != createDate">
@@ -36,7 +61,32 @@
 					#{ip},
 				</if>
 				<if test="null != country">
-					#{country}
+					#{country},
+				</if>
+				<if test="null != county">
+					#{county},
+				</if>
+
+				<if test="null != countryName">
+					#{countryName},
+				</if>
+				<if test="null != countryCode">
+					#{countryCode},
+				</if>
+				<if test="null != provinceName">
+					#{provinceName},
+				</if>
+				<if test="null != cityName">
+					#{cityName},
+				</if>
+				<if test="null != postalCode">
+					#{postalCode},
+				</if>
+				<if test="null != longitude">
+					#{longitude},
+				</if>
+				<if test="null != latitude">
+					#{latitude},
 				</if>
 			</trim>
 		</insert>
@@ -44,12 +94,36 @@
 	<update id="update">
 		update track
 		<trim prefix="set" suffixOverrides=",">
-			<if test="track.version!=null">
+			<if test="track.version != null">
 				version=#{track.version},
 			</if>
 			modify_date=#{track.modifyDate},
 			<if test="track.country != null and !track.country.equals('')">
-			country=#{track.country}
+			country=#{track.country},
+			</if>
+			<if test="track.county != null and !track.county.equals('')">
+				county=#{track.county},
+			</if>
+			<if test="track.countryName != null and !track.countryName.equals('')">
+				countryName=#{track.countryName},
+			</if>
+			<if test="track.countryCode != null and !track.countryCode.equals('')">
+				countryCode=#{track.countryCode},
+			</if>
+			<if test="track.provinceName != null and !track.provinceName.equals('')">
+				provinceName=#{track.provinceName},
+			</if>
+			<if test="track.cityName != null and !track.cityName.equals('')">
+				cityName=#{track.cityName},
+			</if>
+			<if test="track.postalCode != null and !track.postalCode.equals('')">
+				postalCode=#{track.postalCode},
+			</if>
+			<if test="null != track.longitude  and !track.longitude.equals('')">
+				longitude=#{track.longitude},
+			</if>
+			<if test="null !=  track.latitude and !track.latitude.equals('')">
+				latitude=#{track.latitude},
 			</if>
 		</trim>
 		where id=#{track.id}

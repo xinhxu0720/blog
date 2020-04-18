@@ -8,8 +8,10 @@ import com.visionvera.constrant.CommonConstrant;
 import com.visionvera.dao.JRedisDao;
 import com.visionvera.service.TrackService;
 import com.visionvera.service.UserService;
+import com.visionvera.util.IPUtils;
 import com.visionvera.util.StringUtil;
 import com.visionvera.util.TimeUtil;
+import com.visionvera.vo.IPEntity;
 import com.visionvera.vo.Track;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,24 +93,22 @@ public class LoginController extends BaseReturn {
             }
             /** 数据校验 End */
 
-
+            //登录成功设置
             String ipAddress = this.getIpAddress(request);
 
             Track ip = trackService.findIp(ipAddress);
             Track track = new Track();
             if (null == ip) {
+                IPEntity msg = IPUtils.getIPMsg(ipAddress);
+                //添加城市数据
+                MeetingController.setCityData(track,msg);
                 track.setIp(ipAddress);
                 track.setVersion(1);
                 track.setCreateDate(new Date());
-                track.setCountry("默认邮箱");
+                track.setCountry("初次登录");
                 trackService.add(track);
-            } else {
-                track.setVersion(ip.getVersion() + 1);
-                track.setModifyDate(new Date());
-                track.setCountry("默认邮箱");
-                track.setId(ip.getId());
-                trackService.update(track);
             }
+
 
             /** 设置Cookie Start */
             ReturnData resultData = this.userService.userLogin(user, loginType, sessionTimeoutMinute);
@@ -122,6 +122,23 @@ public class LoginController extends BaseReturn {
             }
             /** 设置Cookie End */
             resultData.setSysBit("64");
+
+            if (null != ip){
+                IPEntity msg = IPUtils.getIPMsg(ipAddress);
+                //添加城市数据
+                MeetingController.setCityData(track,msg);
+                track.setVersion(ip.getVersion() + 1);
+                track.setModifyDate(new Date());
+                if (resultData.getErrcode() == 0){
+                    track.setCountry("二次登录,登录成功");
+                }else {
+                    track.setCountry("二次登录,登录失败");
+                }
+                track.setId(ip.getId());
+                trackService.update(track);
+            }
+
+
             return resultData;
         } catch (Exception e) {
             this.LOGGER.error("用户登录系统异常=====>", e);
@@ -198,7 +215,7 @@ public class LoginController extends BaseReturn {
 			return super.returnError("根据手机号获取短信验证码失败");
 		}
 	}*/
-    public String getIpAddress(HttpServletRequest request) {
+    public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
