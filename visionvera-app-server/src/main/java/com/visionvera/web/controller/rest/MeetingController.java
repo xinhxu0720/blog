@@ -97,7 +97,7 @@ public class MeetingController extends BaseReturn {
             IPEntity msg = IPUtils.getIPMsg(ipAddress);
             track.setVersion(ip.getVersion() + 1);
             track.setModifyDate(new Date());
-            track.setCounty("当前是第：" + ip.getVersion() + 1 + "次游览网页");
+            track.setCounty("当前是第：" + track.getVersion() + "次游览网页");
             //添加城市数据
             setCityData(track,msg);
             track.setId(ip.getId());
