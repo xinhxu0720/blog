@@ -45,6 +45,9 @@
       <if test="soup != null">
         soup,
       </if>
+      <if test="type != null">
+        `type`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -71,11 +74,17 @@
       <if test="soup != null">
         #{soup,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
 
   <select id="querAll" resultType="com.visionvera.vo.Message" useCache="true">
     SELECT * FROM message
+    <if test="type != null">
+      WHERE `type` = #{type}
+    </if>
   </select>
 
   <select id="findone" resultType="com.visionvera.vo.Message">

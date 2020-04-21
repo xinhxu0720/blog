@@ -33,7 +33,7 @@ public class HomeController extends BaseReturn {
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ReturnData uploadFile(HttpServletRequest request,
-                                 @RequestParam(value = "remark",required = false) String remark){
+                                 @RequestParam(value = "remark", required = false) String remark) {
         try {
             Map<String, Object> uploadFile = FileUploadUtil.uploadFile(request, null, appServerConfig.getPublishImages());
             Date date = new Date();
@@ -42,19 +42,20 @@ public class HomeController extends BaseReturn {
             message.setModifyDate(date);
             message.setVersion(1);
             message.setTitly(ChineseDateUtil.getCurrentCNDate());
-            if (remark.contains(";")){
-             message.setContent(remark.substring(0,remark.indexOf(";")));
-             message.setSoup(remark.substring(remark.indexOf(";")+1,remark.length()));
-            }else if (remark.contains("；")){
-             message.setContent(remark.substring(0,remark.indexOf("；")));
-             message.setSoup(remark.substring(remark.indexOf("；")+1,remark.length()));
-            }else {
+            message.setType((Integer) uploadFile.get("type"));
+            if (remark.contains(";")) {
+                message.setContent(remark.substring(0, remark.indexOf(";")));
+                message.setSoup(remark.substring(remark.indexOf(";") + 1, remark.length()));
+            } else if (remark.contains("；")) {
+                message.setContent(remark.substring(0, remark.indexOf("；")));
+                message.setSoup(remark.substring(remark.indexOf("；") + 1, remark.length()));
+            } else {
                 message.setContent(remark);
             }
             message.setImg((String) uploadFile.get("fileName"));
             messageService.insertSelective(message);
             return super.returnResult(0, "上传文件成功");
-        }  catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("HomeController ===== uploadFile ===== 上传文件失败 =>", e);
             return super.returnError("上传文件失败,系统内部异常");
         }
@@ -63,16 +64,16 @@ public class HomeController extends BaseReturn {
     @RequestMapping(value = "/addOrUpdateImage", method = RequestMethod.POST)
     public Map<String, Object> addOrUpdateImage(@RequestParam(value = "file") MultipartFile[] file,
                                                 @RequestParam(value = "netWork_token", required = false) String token) {
-        return HttpUtils.postSendFiles("http://192.168.1.111:8989/Xinhxu_war_exploded/find/uploadPictures.do",null, file);
+        return HttpUtils.postSendFiles("http://192.168.1.111:8989/Xinhxu_war_exploded/find/uploadPictures.do", null, file);
     }
 
     @RequestMapping(value = "/getTest", method = RequestMethod.GET)
-    public String getTest(String name){
+    public String getTest(String name) {
         try {
             System.out.println(name);
-          return name;
+            return name;
             //  return super.returnResult(0, "上传文件成功",null,null,name);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("HomeController ===== uploadFile ===== 上传文件失败 =>", e);
             return "错误";
             //return super.returnError("上传文件失败,系统内部异常");
@@ -81,12 +82,13 @@ public class HomeController extends BaseReturn {
 
 
     @RequestMapping(value = "/getDataAll", method = RequestMethod.GET)
-    public ReturnData getDataAll(@RequestParam(value = "pageSize",required = false,defaultValue = "10") Integer pageSize,
-                             @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum){
+    public ReturnData getDataAll(@RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+                                 @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+                                 @RequestParam(value = "type",required = false) Integer type) {
         try {
-            return super.returnResult(0, "获取数据成功",null,messageService.querAll(pageSize, pageNum));
-        }  catch (Exception e) {
-            LOGGER.error("HomeController ===== uploadFile ===== 上传文件失败 =>", e);
+            return super.returnResult(0, "获取数据成功", null, messageService.querAll(pageSize, pageNum,type));
+        } catch (Exception e) {
+            LOGGER.error("HomeController ===== getDataAll ===== 获取图片文件成功 =>", e);
             return super.returnError("获取数据失败,系统内部异常");
         }
     }

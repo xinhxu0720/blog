@@ -12,7 +12,7 @@ public interface MessageService {
 
     int insertSelective(Message record);
 
-    PageInfo<Message> querAll(Integer pageSize, Integer pageNum);
+    PageInfo<Message> querAll(Integer pageSize, Integer pageNum,int type);
 
     List<Message> findNewestMessage(String createDate);
 }
