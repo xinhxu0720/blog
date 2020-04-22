@@ -43,6 +43,7 @@ public class HomeController extends BaseReturn {
             message.setVersion(1);
             message.setTitly(ChineseDateUtil.getCurrentCNDate());
             message.setType((Integer) uploadFile.get("type"));
+            message.setBeautifulPicture((Integer) uploadFile.get("type") == 1 ? 1 : 0);
             if (remark.contains(";")) {
                 message.setContent(remark.substring(0, remark.indexOf(";")));
                 message.setSoup(remark.substring(remark.indexOf(";") + 1, remark.length()));
@@ -86,7 +87,8 @@ public class HomeController extends BaseReturn {
                                  @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "type",required = false) Integer type) {
         try {
-            return super.returnResult(0, "获取数据成功", null, messageService.querAll(pageSize, pageNum,type));
+
+            return super.returnResult(0, "获取数据成功", null, messageService.querAll(pageSize, pageNum,type).getList());
         } catch (Exception e) {
             LOGGER.error("HomeController ===== getDataAll ===== 获取图片文件成功 =>", e);
             return super.returnError("获取数据失败,系统内部异常");

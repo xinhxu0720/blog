@@ -8,6 +8,7 @@ import scala.Int;
 import java.util.List;
 
 public interface MessageDao {
+
     int insert(Message record);
 
     int insertSelective(Message record);

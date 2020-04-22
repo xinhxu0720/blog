@@ -25,6 +25,16 @@ public class Message {
 
     private Integer type;
 
+    private Integer beautifulPicture;
+
+    public Integer getBeautifulPicture() {
+        return beautifulPicture;
+    }
+
+    public void setBeautifulPicture(Integer beautifulPicture) {
+        this.beautifulPicture = beautifulPicture;
+    }
+
     public Integer getType() {
         return type;
     }

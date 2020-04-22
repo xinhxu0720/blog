@@ -34,9 +34,9 @@ public class IPUtils {
         File database = null;
 
         try {
-           database = new File("/sofwate/imgs/GeoLite2-City.mmdb");  //绝对路径读取文件方式
+            // database = new File("/sofwate/imgs/GeoLite2-City.mmdb");  //绝对路径读取文件方式
 
-            // database = new File("I:\\GeoLite2-City.mmdb");  //绝对路径读取文件方式
+             database = new File("D:\\GeoLite2-City.mmdb");  //绝对路径读取文件方式
 
             // 通过 InputStream 流式读取文件，目的解决无法通过File方式读取jar包内的文件的问题·1
           //  database = getFile("/sofwate/imgs/GeoLite2-City.mmdb","geolite2.mmdb");

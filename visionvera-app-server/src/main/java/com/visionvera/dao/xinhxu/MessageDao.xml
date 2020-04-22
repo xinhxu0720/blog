@@ -48,6 +48,9 @@
       <if test="type != null">
         `type`,
       </if>
+      <if test="beautifulPicture != null">
+        `beautiful_picture`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -76,6 +79,9 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
+      </if>
+      <if test="beautifulPicture != null">
+        #{beautifulPicture,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
