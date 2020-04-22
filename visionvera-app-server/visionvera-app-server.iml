@@ -25,6 +25,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.maxmind.geoip2:geoip2:2.12.0" level="project" />
+    <orderEntry type="library" name="Maven: com.maxmind.db:maxmind-db:1.2.2" level="project" />
     <orderEntry type="module" module-name="visionvera-common-api" />
     <orderEntry type="module" module-name="visionvera-common" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.47" level="project" />

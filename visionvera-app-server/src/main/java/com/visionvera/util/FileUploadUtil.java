@@ -1,6 +1,9 @@
 package com.visionvera.util;
 
+import com.visionvera.web.controller.rest.HomeController;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -12,6 +15,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class FileUploadUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(FileUploadUtil.class);
 
     /***
      * 通用文件上传
@@ -75,14 +80,17 @@ public class FileUploadUtil {
     }
 
     private static int fileType(String suffix) {
-        if (suffix.equalsIgnoreCase("jpg") || suffix.equalsIgnoreCase("png") ||
-                suffix.equalsIgnoreCase("jpeg") || suffix.equalsIgnoreCase("jfif") ||
-                suffix.equalsIgnoreCase("gif")) {
+        if (suffix.equalsIgnoreCase(".jpg") || suffix.equalsIgnoreCase(".png") ||
+                suffix.equalsIgnoreCase(".jpeg") || suffix.equalsIgnoreCase(".jfif") ||
+                suffix.equalsIgnoreCase(".gif")) {
+            log.info("当前上传的是图片文件："+suffix);
             return 1;
         } else if (suffix.equalsIgnoreCase("avi") || suffix.equalsIgnoreCase("MOV") ||
                 suffix.equalsIgnoreCase("mp4")) {
+            log.info("当前上传的是视频文件："+suffix);
             return 2;
         }
+        log.info("当前上传的是其他文件："+suffix);
         return 3;
     }
 }
