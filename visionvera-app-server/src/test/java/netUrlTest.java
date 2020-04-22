@@ -1,5 +1,7 @@
 import com.visionvera.bean.restful.client.RestClient;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +22,25 @@ public class netUrlTest {
     public  void urlContent()throws Exception{
         String str = getContentFromURL("http://www.xinhxu.com/");
         System.out.println(str);
+    }
+
+
+    @Test
+    public void testReadFile() throws IOException {
+//        ClassPathResource classPathResource = new ClassPathResource("resource.properties");
+        Resource resource = new ClassPathResource("appServerConfig.properties");
+
+        InputStream is = resource.getInputStream();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        String data = null;
+        while((data = br.readLine()) != null) {
+            System.out.println(data);
+        }
+
+        br.close();
+        isr.close();
+        is.close();
     }
 
     private static String getContentFromURL(String urladdr)

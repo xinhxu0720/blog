@@ -26,11 +26,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public PageInfo<Message> querAll(Integer pageSize,Integer pageNum) {
+    public PageInfo<Message> querAll(Integer pageSize,Integer pageNum,int type) {
         if (!pageSize.equals(-1)) {
             PageHelper.startPage(pageNum, pageSize);
         }
-        return new PageInfo<>(messageMapper.querAll());
+        return new PageInfo<>(messageMapper.querAll(type));
     }
 
     @Override
