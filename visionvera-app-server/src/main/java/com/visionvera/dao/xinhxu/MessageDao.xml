@@ -87,7 +87,7 @@
   </insert>
 
   <select id="querAll" resultType="com.visionvera.vo.Message" useCache="true">
-    SELECT * FROM message
+    SELECT *,content AS alt,img AS src FROM message
     <if test="type != null">
       WHERE `type` = #{type}
     </if>

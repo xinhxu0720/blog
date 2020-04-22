@@ -3,7 +3,6 @@ package com.visionvera.dao.xinhxu;
 
 import com.visionvera.vo.Message;
 import org.apache.ibatis.annotations.Param;
-import scala.Int;
 
 import java.util.List;
 

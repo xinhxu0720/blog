@@ -87,7 +87,6 @@ public class HomeController extends BaseReturn {
                                  @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "type",required = false) Integer type) {
         try {
-
             return super.returnResult(0, "获取数据成功", null, messageService.querAll(pageSize, pageNum,type).getList());
         } catch (Exception e) {
             LOGGER.error("HomeController ===== getDataAll ===== 获取图片文件成功 =>", e);
