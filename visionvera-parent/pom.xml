@@ -37,7 +37,7 @@
 		<org.codehaus.jackson.version>1.9.13</org.codehaus.jackson.version>
 		<commons-fileupload.version>1.3.2</commons-fileupload.version>
 		<tomcat.version>8.5.24</tomcat.version>
-		<netty.version>4.1.22.Final</netty.version>
+		<netty.version>4.1.42.Final</netty.version>
 		<swagger-version>2.4.0</swagger-version>
 		<mapstruct.version>1.2.0.Final</mapstruct.version>
 		<scala-lang.version>2.11.0</scala-lang.version>
