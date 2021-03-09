@@ -1,18 +1,25 @@
 package com.visionvera.web.controller.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.visionvera.bean.base.BaseReturn;
 import com.visionvera.bean.base.ReturnData;
 import com.visionvera.config.AppServerConfig;
 import com.visionvera.service.MessageService;
+import com.visionvera.util.BusinessException;
 import com.visionvera.util.ChineseDateUtil;
 import com.visionvera.util.FileUploadUtil;
 import com.visionvera.util.HttpUtils;
 import com.visionvera.vo.Message;
+import com.visionvera.web.soket.WebSocketClient;
+import io.swagger.models.auth.In;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import scala.Int;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -21,6 +28,7 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 @RequestMapping("/rest/home")
+@Slf4j
 public class HomeController extends BaseReturn {
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
@@ -69,28 +77,68 @@ public class HomeController extends BaseReturn {
     }
 
     @RequestMapping(value = "/getTest", method = RequestMethod.GET)
-    public String getTest(String name) {
+    public String getTest(@RequestParam(value = "userId") String userId,
+                          @RequestParam(value = "flag") Integer flag) {
         try {
-            System.out.println(name);
-            return name;
-            //  return super.returnResult(0, "上传文件成功",null,null,name);
+            connection(userId, flag, Maps.newHashMap(userId, "2222"));
         } catch (Exception e) {
             LOGGER.error("HomeController ===== uploadFile ===== 上传文件失败 =>", e);
             return "错误";
-            //return super.returnError("上传文件失败,系统内部异常");
         }
+        return "成功";
     }
 
+    @RequestMapping(value = "/send", method = RequestMethod.GET)
+    public String send(@RequestParam(value = "val") Integer val,
+                       @RequestParam(value = "end")Integer end) {
+        try {
+            for (int i = val; i < end; i++) {
+                String s = HttpUtils.sendGet("http://localhost:8806/rest/home/getTest?userId=" + i + "&flag=2", null);
+                System.out.println("响应数据：" + s);
+            }
+        } catch (Exception e) {
+            LOGGER.error("HomeController ===== uploadFile ===== 上传文件失败 =>", e);
+            return "错误";
+        }
+        return "成功";
+    }
+
+    public ReturnData connection(String userId, Integer connectionFlag, Map<String, Object> data) {
+        try {
+            if (null != connectionFlag && connectionFlag == 1) {
+                WebSocketClient.closeUserConnection(userId, JSONObject.toJSONString(data));
+                return super.returnSuccess("断开连接成功");
+            } else if (null != connectionFlag && connectionFlag == 0) {
+                ReturnData connection = WebSocketClient.connection(getPlatformTypeServer(1), userId, JSONObject.toJSONString(data));
+                String userMessage = WebSocketClient.getUserMessage(userId);
+                log.info("这是队列数据：" + userMessage);
+                return super.returnResult(0, connection.getErrmsg(), null, userMessage);
+            }
+            WebSocketClient.connection(getPlatformTypeServer(1), userId, JSONObject.toJSONString(data));
+            return super.returnResult(0, "发送指令成功", null, "");
+        } catch (BusinessException b) {
+            log.error(b.getMessage());
+            return super.returnError(b.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return super.returnError("发送遥控器指令错误，系统内部异常");
+        }
+    }
 
     @RequestMapping(value = "/getDataAll", method = RequestMethod.GET)
     public ReturnData getDataAll(@RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                  @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
-                                 @RequestParam(value = "type",required = false) Integer type) {
+                                 @RequestParam(value = "type", required = false) Integer type) {
         try {
-            return super.returnResult(0, "获取数据成功", null, messageService.querAll(pageSize, pageNum,type).getList());
+            return super.returnResult(0, "获取数据成功", null, messageService.querAll(pageSize, pageNum, type).getList());
         } catch (Exception e) {
             LOGGER.error("HomeController ===== getDataAll ===== 获取图片文件成功 =>", e);
             return super.returnError("获取数据失败,系统内部异常");
         }
+    }
+
+    public String getPlatformTypeServer(int platformType) {
+        return "ws://localhost:9111/websocket/user";
     }
 }

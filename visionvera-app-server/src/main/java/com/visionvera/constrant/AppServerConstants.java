@@ -44,4 +44,7 @@ public class AppServerConstants {
 
     /** 智慧大脑脑图务器主键ID */
     public static final int ZHDNNT_SERVER_ID = 38;
+
+    /** webSocket客服端接收消息超时时间*/
+    public static final int WEB_SOCKET_TIMEOUT = 5;
 }
