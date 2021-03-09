@@ -4,10 +4,11 @@ import com.visionvera.bean.base.BaseReturn;
 import com.visionvera.bean.base.ReturnData;
 import com.visionvera.dao.xinhxu.LabelDao;
 import com.visionvera.vo.LabelVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.awt.*;
 import java.util.List;
 
 @Service
@@ -16,6 +17,8 @@ public class LabelServiceImpl implements LabelService {
     @Resource
     LabelDao labelDao;
 
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
     @Override
     public ReturnData addLabel(LabelVO labelVO) {
         BaseReturn baseReturn = new BaseReturn();
